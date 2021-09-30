@@ -54,7 +54,14 @@ import createDataContext from './createDataContext';
 const myReducer= (state,action) => {
         switch (action.type) {
             case 'add_blogPost':
-                return [...state,{title:`Blog Post #${state.length+action.payload}`}]
+                return [...state,{
+                    id : Math.floor(Math.random()*9999*Math.random()),
+                    title:`Blog Post #${state.length+action.payload}`
+                }]
+            case 'delete_blogPost':
+                // 'filter' will run against 'state' array and execute the function
+                // all the element that makes the condition true will be returned
+                return state.filter( (blogPost) => blogPost.id !== action.payload)
             default:
                 return state;
         }
@@ -63,5 +70,11 @@ const myReducer= (state,action) => {
         // setBlogPost([...blogPosts,{title:`Blog Post #${blogPosts.length+1}`}])
         return () => {dispatch({type:'add_blogPost',payload:1})}
     }
+    const deleteBlogPost = (dispatch)=>{
+        return (id) => {dispatch({type:'delete_blogPost',payload:id})}
+    }
 
-export const {Context, Provider} = createDataContext(myReducer,{addBlogPost},[]) 
+export const {Context, Provider} = createDataContext(
+    myReducer,
+    {addBlogPost, deleteBlogPost},
+    []) ;
