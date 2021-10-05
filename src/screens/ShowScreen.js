@@ -7,7 +7,8 @@ const ShowScreen = ({navigation}) => {
     const blogPost = state.find((blogPost)=>blogPost.id===navigation.getParam('id'))
     return (
         <View>
-            <Text>{blogPost.title}</Text>
+            <Text>Title: {blogPost.title}</Text>
+            <Text>Content: {blogPost.content}</Text>
         </View>
     )
 };

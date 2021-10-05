@@ -49,6 +49,7 @@
 
 
 import React from 'react';
+import { call } from 'react-native-reanimated';
 import createDataContext from './createDataContext';
 
 const myReducer= (state,action) => {
@@ -56,7 +57,9 @@ const myReducer= (state,action) => {
             case 'add_blogPost':
                 return [...state,{
                     id : Math.floor(Math.random()*9999*Math.random()),
-                    title:`Blog Post #${state.length+action.payload}`
+                    // title:`Blog Post #${state.length+action.payload}`
+                    title: action.payload.title,
+                    content: action.payload.content
                 }]
             case 'delete_blogPost':
                 // 'filter' will run against 'state' array and execute the function
@@ -68,7 +71,10 @@ const myReducer= (state,action) => {
 }
     const addBlogPost = (dispatch)=>{
         // setBlogPost([...blogPosts,{title:`Blog Post #${blogPosts.length+1}`}])
-        return () => {dispatch({type:'add_blogPost',payload:1})}
+        return (title,content, callback) => {
+            dispatch({type:'add_blogPost',payload:{title,content}});
+            callback();
+        }
     }
     const deleteBlogPost = (dispatch)=>{
         return (id) => {dispatch({type:'delete_blogPost',payload:id})}
