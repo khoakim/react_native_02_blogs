@@ -66,18 +66,18 @@ const myReducer= (state,action) => {
                 // all the element that makes the condition true will be returned
                 return state.filter( (blogPost) => blogPost.id !== action.payload);
             case 'update_blogPost':
-                var newArray = [...state];
-                var foundIndex = newArray.findIndex(x => x.id == action.payload.id);
-                newArray[foundIndex].title = action.payload.title;
-                newArray[foundIndex].content = action.payload.content;
-                return newArray;
-                // let newArray = state.filter( (blogPost) => blogPost.id !== action.payload);
-                    // return [...newArray,{
-                    //     id : action.payload.id,
-                    //     // title:`Blog Post #${state.length+action.payload}`
-                    //     title: action.payload.title,
-                    //     content: action.payload.content
-                    // }]
+                // var newArray = [...state];
+                // var foundIndex = newArray.findIndex(x => x.id == action.payload.id);
+                // newArray[foundIndex].title = action.payload.title;
+                // newArray[foundIndex].content = action.payload.content;
+                // return newArray;
+
+                // A better way is to call "map" which will return NEW array anyway
+                return state.map( (blogPost) => {
+                    return blogPost.id === action.payload.id
+                    ? action.payload
+                    : blogPost;
+                })
             default:
                 return state;
         }
