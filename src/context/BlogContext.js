@@ -64,7 +64,20 @@ const myReducer= (state,action) => {
             case 'delete_blogPost':
                 // 'filter' will run against 'state' array and execute the function
                 // all the element that makes the condition true will be returned
-                return state.filter( (blogPost) => blogPost.id !== action.payload)
+                return state.filter( (blogPost) => blogPost.id !== action.payload);
+            case 'update_blogPost':
+                var newArray = [...state];
+                var foundIndex = newArray.findIndex(x => x.id == action.payload.id);
+                newArray[foundIndex].title = action.payload.title;
+                newArray[foundIndex].content = action.payload.content;
+                return newArray;
+                // let newArray = state.filter( (blogPost) => blogPost.id !== action.payload);
+                    // return [...newArray,{
+                    //     id : action.payload.id,
+                    //     // title:`Blog Post #${state.length+action.payload}`
+                    //     title: action.payload.title,
+                    //     content: action.payload.content
+                    // }]
             default:
                 return state;
         }
@@ -76,11 +89,23 @@ const myReducer= (state,action) => {
             callback();
         }
     }
+
+    const updateBlogPost = (dispatch)=>{
+        // setBlogPost([...blogPosts,{title:`Blog Post #${blogPosts.length+1}`}])
+        return (id, title,content, callback) => {
+            dispatch({type:'update_blogPost',payload:{id,title,content}});
+            callback();
+        }
+    }
+
     const deleteBlogPost = (dispatch)=>{
         return (id) => {dispatch({type:'delete_blogPost',payload:id})}
     }
 
 export const {Context, Provider} = createDataContext(
     myReducer,
-    {addBlogPost, deleteBlogPost},
-    []) ;
+    {addBlogPost, deleteBlogPost,updateBlogPost},
+    // []
+    // enter some initial values to save time
+    [{title:'Initial',content:'New Content',id:1}]
+    ) ;

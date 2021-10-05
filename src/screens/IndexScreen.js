@@ -1,13 +1,13 @@
 import React, {useContext} from 'react';
-import { View, Text, StyleSheet,FlatList, Button, TouchableOpacity } from 'react-native';
-import { AntDesign } from '@expo/vector-icons';
+import { View, Text, StyleSheet,FlatList, TouchableOpacity } from 'react-native';
+import { Feather } from '@expo/vector-icons';
 // import BlogContext from '../context/BlogContext';
 import { Context as BlogContext} from '../context/BlogContext';
 const IndexScreen = ({navigation}) => {
 
     const {state, deleteBlogPost}=useContext(BlogContext);
     // const {data,addBlogPost}=useContext(Context);
-    console.log(navigation)
+    // console.log(navigation)
     return (
         <View>
 
@@ -22,7 +22,7 @@ const IndexScreen = ({navigation}) => {
                         <Text style={styles.title}>Title {item.title} - {item.id}</Text>
                         
                         <TouchableOpacity onPress={ () => deleteBlogPost(item.id)}>
-                        <AntDesign name="delete" style={styles.deleteIcon} />
+                        <Feather name="trash" style={styles.deleteIcon} />
                         </TouchableOpacity>
                         </View>
                         </TouchableOpacity>
@@ -41,7 +41,7 @@ IndexScreen.navigationOptions = ({navigation}) => {
     return {
         headerRight : ()=>(
             <TouchableOpacity onPress={ () => navigation.navigate("Create")}>
-                <AntDesign name="plus" style={styles.addIcon}/>
+                <Feather name="plus" style={styles.addIcon}/>
             </TouchableOpacity>
         )
     };
@@ -61,7 +61,7 @@ const styles=StyleSheet.create({
         fontSize : 30
     },
     addIcon : {
-        fontSize : 20
+        fontSize : 30
     },
     title : {
         fontSize : 18
