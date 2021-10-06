@@ -1,13 +1,27 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import { View, Text, StyleSheet,FlatList, TouchableOpacity } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 // import BlogContext from '../context/BlogContext';
 import { Context as BlogContext} from '../context/BlogContext';
 const IndexScreen = ({navigation}) => {
 
-    const {state, deleteBlogPost}=useContext(BlogContext);
+    const {state, deleteBlogPost,getBlogPosts}=useContext(BlogContext);
     // const {data,addBlogPost}=useContext(Context);
     // console.log(navigation)
+
+    useEffect( ()=> {
+        getBlogPosts();
+
+        //everytime IndexScreen get focus, execute the function
+        const listener = navigation.addListener('didFocus',()=>{
+            getBlogPosts();
+        });
+
+        // only executed when IndexScreen is completely not in use (unmount)
+        return () => {
+            listener.remove();
+        }
+    },[]);
     return (
         <View>
 
